@@ -1,4 +1,4 @@
-import isLetterOrDigit from "./isLetterOrDigit";
+import isLetterOrDigit from "./isLetterOrDigit.js";
 
 export default function charCount(s:String) : Object {
     let result = {};

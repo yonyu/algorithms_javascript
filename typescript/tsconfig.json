@@ -3,7 +3,8 @@
         "target": "esnext",
         "outDir": "./dist",
         "rootDir": "./src",
-        "module": "ES2020"
+        "module": "ES2020",
+        "sourceMap": true
     },
     "include": ["src/**/*", "src/app.ts"],
     "exclude": ["node_modules"]
