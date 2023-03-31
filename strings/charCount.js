@@ -1,15 +1,15 @@
 import isLetterOrDigit from "./isLetterOrDigit.js";
 
-export default function charCount(s) {
+export default function charCount(str) {
     let result = {};
-    // s is null or empty
-    if (!s || typeof s !== 'string') {
+    // str is null or empty
+    if (!str || typeof str !== 'string') {
         return result;
     }
 
-    for (let index = 0; index < s.length; index++) {
-        let char = s[index].toLowerCase();
+    for (let char of str) { 
         if (isLetterOrDigit(char)) {
+            char = char.toLowerCase();
             result[char] = ++result[char] || 1;
         }
     }
