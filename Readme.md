@@ -47,3 +47,7 @@ npm install --save-dev babel-jest @babel/core @babel/preset-env @babel/register
 "include": ["jest"]
 }
 }
+
+Command to run unit testing:
+npm run test
+npx jest
