@@ -51,3 +51,31 @@ npm install --save-dev babel-jest @babel/core @babel/preset-env @babel/register
 Command to run unit testing:
 npm run test
 npx jest
+
+Run command to install types for Jest and Node.js
+npm install @types/jest @types/node -D
+
+Added 'jest.config.js' file (using esmodule):
+export default {
+testEnvironment: "node",
+verbose: true,
+};
+
+In 'launch.json' file, copy the following lines:
+{
+"type": "node",
+"request": "launch",
+"name": "Jest Current File",
+"program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "--runTestsByPath",
+        "${relativeFile}",
+"--config",
+"jest.config.js"
+],
+"console": "integratedTerminal",
+"internalConsoleOptions": "neverOpen",
+"windows": {
+"program": "${workspaceFolder}/node_modules/jest/bin/jest"
+}
+},
