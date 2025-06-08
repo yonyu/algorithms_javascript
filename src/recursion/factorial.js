@@ -1,5 +1,6 @@
 /**
  * Recursive factorial
+ * You would never want to use a recursive factorial function in real-world code.
  * 
  * @param {number} number 
  * @returns {number}
