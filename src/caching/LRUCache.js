@@ -10,42 +10,48 @@
  *   Otherwise, add the key-value pair to the cache. If the number of keys exceeds the 
  *   capacity from this operation, evict the least recently used key.
  * 
- * JavaScript Map keeps the key order as it is inserted. This makes the implementation
- * straight forward.
+ * JavaScript's Map maintains insertion order, so we can use it to track LRU.
+ * - The most recently used item is moved to the end of the Map.
+ * - When the cache exceeds capacity, remove the oldest item (Map's first entry).
  */
 
-class LRUCache {
+export default class LRUCache {
     constructor(capacity) {
         this.capacity = capacity;
         this.cache = new Map();
     }
 
+    /**
+     * Get the value of the key if it exists in the cache.
+     * Move the key to the end to mark it as recently used.
+     */
     get(key) {
-        let value = this.cache.get(key);
-        if (value === undefined) {
+        if (!this.cache.has(key)) {
             return -1;
-        } else {
-            // Remove the key from the map and add it to the end    
-            this.cache.delete(key);
-            this.cache.set(key, value);
-            return value;
         }
+
+        const value = this.cache.get(key);    
+        this.cache.delete(key);          // Remove old position
+        this.cache.set(key, value);      // Re-insert to end as most recently used
+        return value;
     }
 
-    delete(key) {
-        return this.cache.delete(key);
-    }
-
-    set(key, value) {
-        const deleted = this.delete(key);
-        // the key does not exist
-        if (!deleted && value !== undefined) {
+    /**
+     * Put the key-value pair into the cache.
+     * If the key exists, update and mark as recently used.
+     * If new and capacity is exceeded, evict the least recently used item.
+     */
+    put(key, value) {
+        if (this.cache.has(key)) {
+            this.cache.delete(key);
+        } else {
             // If cache is full, delete the least recently used item
-            if (this.cache.size()>= this.capacity) {
+            if (this.cache.size >= this.capacity) {
+                // Remove the least recently used item (first inserted)
                 let firstKey = this.cache.keys().next().value; // the first key is the oldest
                 this.cache.delete(firstKey);
             }
         }
-        this.cache.set(key, value); // add it to the end; it is the most frequent used
+        this.cache.set(key, value); // Insert as most recently used
     }
 }
